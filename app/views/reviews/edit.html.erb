@@ -1,6 +1,15 @@
-<h1>Editing review</h1>
+<% if !@review.product_id.nil? %>
+  <h1>Editing review for <%= @review.product.name %></h1>
+<% else %>
+  <h1>Editing review</h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @review %> |
-<%= link_to 'Back', reviews_path %>
+<% if !@review.product_id.nil? %>
+  <%= link_to "Back to #{@review.product.name}", @review.product %><br>
+  <%= link_to "Back to all products", products_path %>
+<% else %>
+  <%= link_to "Show", @review %> |
+  <%= link_to 'Back', reviews_path %>
+<% end %>

@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
+
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.all.sort
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,8 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product = Product.find(params[:id])
+
+    @reviews = @product.reviews
 
     respond_to do |format|
       format.html # show.html.erb
@@ -80,4 +83,5 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

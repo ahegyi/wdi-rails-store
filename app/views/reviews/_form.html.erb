@@ -19,10 +19,23 @@
     <%= f.label :rating %><br />
     <%= f.text_field :rating %>
   </div>
-  <div class="field">
+  <!--
     <%= f.label :product_id %><br />
     <%= f.number_field :product_id %>
+  -->
+
+  <div class="field">
+    <% if params[:product_id].present? %>
+      <h3>Adding to <%= @product_name %></h3>
+      <input type="hidden" name="review[product_id]" value="<%= params[:product_id] %>">
+    <% elsif !@review.product_id.nil? %>
+      <h3>Adding to <%= @review.product.name %></h3>
+      <input type="hidden" name="review[product_id]" value="<%= @review.product.id %>">
+    <% else %>
+      <h1>Warning! No associated product will be saved with this Review.</h1>
+    <% end %>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -1,4 +1,7 @@
 class ReviewsController < ApplicationController
+
+  before_filter :set_products, :only => [:edit, :new]
+
   # GET /reviews
   # GET /reviews.json
   def index
@@ -44,7 +47,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.html { redirect_to @review.product, notice: 'Review was successfully created.' }
         format.json { render json: @review, status: :created, location: @review }
       else
         format.html { render action: "new" }
@@ -60,7 +63,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.update_attributes(params[:review])
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
+        format.html { redirect_to @review.product, notice: 'Review was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -80,4 +83,19 @@ class ReviewsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  private
+  
+  def set_products
+    @products = Product.all
+    if params[:product_id].present?
+      @product = @products.find{|p| p.id == params[:product_id].to_i}
+      @product_name = @product.name
+    else
+      @product = nil
+      @product_name = ""
+    end
+  end
+
 end

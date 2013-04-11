@@ -1,5 +1,14 @@
-<h1>New review</h1>
+<% if @product_name != "" %>
+  <h1>New review for <%= @product_name %></h1>
+<% else %>
+  <h1>New review</h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', reviews_path %>
+<% if @product_name != "" %>
+  <%= link_to "Back to #{@product_name}", @product %><br>
+  <%= link_to "Back to all products", products_path %>
+<% else %>
+  <%= link_to 'Back', reviews_path %>
+<% end %>

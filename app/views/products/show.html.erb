@@ -7,7 +7,30 @@
 
 <p>
   <b>Price:</b>
-  <%= @product.price %>
+  <%= number_to_currency(@product.price) %>
+</p>
+
+<% if @reviews.count > 0 %>
+  <table>
+    <tr>
+      <th>Review</th>
+      <th>Rating</th>
+      <th></th>
+    </tr>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.body %></td>
+        <td><%= number_with_precision(review.rating, :precision => 1, :significant => false) %></td>
+        <td><%= link_to 'Edit', edit_review_path(review) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No reviews yet!</p>
+<% end %>
+
+<p>
+<a href="/reviews/new?product_id=<%= @product.id %>">Write a Review for <%= @product.name %></a>
 </p>
 
 
