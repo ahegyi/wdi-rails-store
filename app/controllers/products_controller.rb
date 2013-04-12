@@ -1,19 +1,21 @@
 class ProductsController < ApplicationController
   before_filter :get_products_in_cart, :only => [:show, :index]
-  
+  before_filter :set_referer_if_blank
 
   # PUT /product/:id/add_to_cart        add_to_cart
   # PUT /product/:id/remove_from_cart   remove_from_cart
   def add_to_cart
     @product = Product.find(params[:id])
 
+    @re_path = request.fullpath
+
     if @product.in_cart
-      redirect_to products_url, notice: "#{@product.name} is already in your cart."
+      redirect_to :back, notice: "#{@product.name} is already in your cart."
       return
     else
       @product.in_cart = true
       @product.save!
-      redirect_to products_url, notice: "#{@product.name} was successfully added to cart."
+      redirect_to :back, notice: "#{@product.name} was successfully added to cart."
       return
     end
     
@@ -25,7 +27,7 @@ class ProductsController < ApplicationController
     @product.in_cart = false
     @product.save!
 
-    redirect_to products_url, notice: "#{@product.name} was successfully removed from your cart."
+    redirect_to :back, notice: "#{@product.name} was successfully removed from your cart."
   end
 
   # GET /products
@@ -119,4 +121,9 @@ class ProductsController < ApplicationController
     @products_in_cart = Product.where(:in_cart => true)
     @cart_total = @products_in_cart.map{|p| p.price}.reduce(:+)
   end
+
+  def set_referer_if_blank
+    request.env['HTTP_REFERER'] ||= root_url
+  end
+
 end
