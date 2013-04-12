@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_filter :get_products_in_cart, :only => [:show, :index]
 
   # GET /products
   # GET /products.json
@@ -84,4 +85,11 @@ class ProductsController < ApplicationController
     end
   end
 
+
+  private
+
+  def get_products_in_cart
+    @products_in_cart = Product.where(:in_cart => true)
+    @cart_total = @products_in_cart.map{|p| p.price}.reduce(:+)
+  end
 end
