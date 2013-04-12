@@ -1,3 +1,26 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+img.product-image {
+  height: 192px;
+  width: 192px;
+  border: 1px solid #999;
+  min-width: 192px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,.7);
+  margin-bottom: 5px;
+}
+
+div.product-image {
+  margin-bottom: 20px;
+}
+
+div.product-details button {
+  margin-top: 5px;
+}
+
+header nav {
+  right: 20px;
+  top: 15px;
+  position: absolute;
+}

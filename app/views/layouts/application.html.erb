@@ -8,16 +8,42 @@
 
    <!-- NetDNA Hosted Bootstrap -->
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      background: rgb(220,220,220);
+    }
+    .cart-container {
+      background: #eee;
+      min-height: 192px !important;
+      box-shadow: 1px 1px 2px rgba(0,0,0,.7);
+      padding: 10px 10px 10px 15px;
+    }
+  </style>
 
 </head>
 <body>
-<div class="container-fluid">
-<div class="row-fluid">
-<div class="span12">
-  <%= yield %>
 
-</div>
-</div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    
+    <div class="span12">
+      <header>
+        <h1>'Na Store</h1>
+        <nav>
+          <ul class="nav nav-pills">
+            <li class="active">
+              <%= link_to "All Products", products_path %>
+            </li>
+            <!-- <li><a href="#">...</a></li>
+            <li><a href="#">...</a></li> -->
+          </ul>
+        </nav>
+              
+      </header>
+      <%= yield %>
+    </div>
+
+  </div>
 </div>
 
 </body>
