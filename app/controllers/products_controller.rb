@@ -1,5 +1,32 @@
 class ProductsController < ApplicationController
   before_filter :get_products_in_cart, :only => [:show, :index]
+  
+
+  # PUT /product/:id/add_to_cart        add_to_cart
+  # PUT /product/:id/remove_from_cart   remove_from_cart
+  def add_to_cart
+    @product = Product.find(params[:id])
+
+    if @product.in_cart
+      redirect_to products_url, notice: "#{@product.name} is already in your cart."
+      return
+    else
+      @product.in_cart = true
+      @product.save!
+      redirect_to products_url, notice: "#{@product.name} was successfully added to cart."
+      return
+    end
+    
+  end
+
+  def remove_from_cart
+    @product = Product.find(params[:id])
+
+    @product.in_cart = false
+    @product.save!
+
+    redirect_to products_url, notice: "#{@product.name} was successfully removed from your cart."
+  end
 
   # GET /products
   # GET /products.json

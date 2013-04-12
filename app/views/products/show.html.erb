@@ -1,5 +1,56 @@
 <p id="notice"><%= notice %></p>
 
+<div class="row-fluid">
+
+  <div class="span8">
+  
+    <div class="row-fluid">
+    
+      <div class="span5">
+        <% if !@product.image_url.nil? && @product.image_url != "" %>
+          <%= image_tag @product.image_url, {:class => "product-image-detail"} %>
+        <% else %>
+          <%= image_tag "no_product_image.jpg", {:class => "product-image-detail"} %>
+        <% end %>
+        <h2><%= @product.name %></h2>
+        <p><%= @product.body %></p>
+
+      </div>
+    
+      <div class="span4">
+
+        <div class="product-detail-container">
+          <h3><%= number_to_currency(@product.price) %></h3>
+          
+          <% if @product.in_cart? %>
+            <p><%= @product.name %> is in your basket.</p>
+          <% else %>
+            <%= button_to 'Add to Cart', add_to_cart_path(@product.id), method: :put, :class => "btn btn-primary btn-medium" %>
+          <% end %>
+
+          <span class="label"><%= @product.reviews.count > 0 ? pluralize(@product.reviews.count, "review") : "" %></span>
+
+          <%= link_to "Edit #{@product.name}", edit_product_path(@product) %>
+          <br>
+          
+          <br>
+        </div>
+        
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="span4 cart-container">
+
+    <%= render "cart" %>
+
+  </div>
+
+</div>
+
+
 <p>
   <b>Name:</b>
   <%= @product.name %>

@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <div class="row-fluid">
 
   <div class="span9">
@@ -9,15 +11,23 @@
       <% end %>
 
         <div class="span4 product-image">
-          <%= image_tag "no_product_image.jpg", {:class => "product-image"} %>
-          
+          <%= link_to product do %>
+
+            <% if !product.image_url.nil? && product.image_url != "" %>
+              <%= image_tag product.image_url, {:class => "product-image"} %>
+            <% else %>
+              <%= image_tag "no_product_image.jpg", {:class => "product-image"} %>
+            <% end %>
+
+          <% end %>
+
           <div class="product-details">
             <strong><%= link_to product.name, product %></strong> (<%= link_to "Edit", edit_product_path(product) %>)
             <br>
             <span class="label"><%= product.reviews.count > 0 ? pluralize(product.reviews.count, "review") : "" %></span>
             <strong><%= number_to_currency(product.price) %></strong>
             <br>
-            <button class="btn btn-primary btn-small" type="button">Add to Cart</button>
+            <%= button_to 'Add to Cart', add_to_cart_path(product.id), method: :put, :class => "btn btn-primary btn-small" %>
           </div>
           
         </div>

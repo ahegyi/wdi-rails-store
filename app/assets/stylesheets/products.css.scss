@@ -15,7 +15,7 @@ div.product-image {
   margin-bottom: 20px;
 }
 
-div.product-details button {
+div.product-details form input.btn {
   margin-top: 5px;
 }
 
@@ -23,4 +23,12 @@ header nav {
   right: 20px;
   top: 15px;
   position: absolute;
+}
+
+
+img.product-image-detail {
+  border: 1px solid #999;
+  min-width: 192px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,.7);
+  margin-bottom: 5px;
 }

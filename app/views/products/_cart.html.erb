@@ -1,13 +1,17 @@
+<h4>Your Basket of Goods</h4>
+
 <% if @products_in_cart.count > 0 %>
   <table class="table">
     <tbody>
       <% @products_in_cart.each do |product| %>
         <tr>
+          <td><%= button_to 'X', remove_from_cart_path(product.id), method: :put, :class => "btn btn-danger btn-mini" %></td>
           <td class="product-name"><%= product.name %></td>
           <td class="product-price"><%= number_to_currency(product.price) %></td>
         </tr>
       <% end %>
         <tr>
+          <td></td>
           <td></td>
           <th class="cart-total"><%= number_to_currency(@cart_total) %></th>
         </tr>
