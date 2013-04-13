@@ -5,7 +5,9 @@
     <tbody>
       <% @products_in_cart.each do |product| %>
         <tr>
-          <td><%= button_to 'X', remove_from_cart_path(product.id), method: :put, :class => "btn btn-danger btn-mini" %></td>
+          <td>
+            <%= button_to "X", remove_from_cart_path(product.id), method: :put, :class => "btn btn-danger btn-mini" %>
+          </td>
           <td class="product-name"><%= product.name %></td>
           <td class="product-price"><%= number_to_currency(product.price) %></td>
         </tr>

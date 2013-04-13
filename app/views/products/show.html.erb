@@ -6,7 +6,7 @@
   
     <div class="row-fluid">
     
-      <div class="span5">
+      <div class="span6 product-container-card">
         <% if !@product.image_url.nil? && @product.image_url != "" %>
           <%= image_tag @product.image_url, {:class => "product-image-detail"} %>
         <% else %>
@@ -17,10 +17,10 @@
 
       </div>
     
-      <div class="span4">
+      <div class="span6 product-container-card">
 
         <div class="product-detail-container">
-          <h3><%= number_to_currency(@product.price) %></h3>
+          <h3 class="price"><%= number_to_currency(@product.price) %></h3>
           
           <% if @product.in_cart? %>
             <p><%= @product.name %> is in your basket.</p>
@@ -28,16 +28,48 @@
             <%= button_to 'Add to Cart', add_to_cart_path(@product.id), method: :put, :class => "btn btn-primary btn-medium" %>
           <% end %>
 
-          <span class="label"><%= @product.reviews.count > 0 ? pluralize(@product.reviews.count, "review") : "" %></span>
-
-          <%= link_to "Edit #{@product.name}", edit_product_path(@product) %>
-          <br>
-          
-          <br>
+          <%= link_to "Edit #{@product.name}", edit_product_path(@product), :class => "edit-product-link btn btn-medium" %>
         </div>
         
       </div>
 
+    </div>
+
+    <div class="row-fluid">
+      <div class="span6 product-container-card">
+
+        <% if @reviews.count > 0 %>
+          <span class="label"><%= @reviews.count > 0 ? pluralize(@reviews.count, "review") : "" %></span>
+          <p class="rainbow-short" style="margin-top: 10px;">
+            <% @product.average_rating.to_i.times do %>
+              ★
+            <% end %>
+            <span class="label">average <%= number_with_precision(@product.average_rating, :precision => 1) %></span>
+          </p>
+          <% @reviews.each do |review| %>
+            <p class="review">
+              <p class="rainbow-short">
+                <% review.rating.to_i.times do %>
+                  ★
+                <% end %>
+              </p>
+              <p>
+                <%= review.body %>
+              </p>
+            </p>
+          <% end %>
+
+        <% else %>
+
+          <p>No reviews yet!</p>
+
+        <% end %>
+
+        <p>
+          <%= link_to "Write a Review for #{@product.name}", new_review_path(:product_id => @product.id) %>
+        </p>
+
+      </div>
     </div>
 
   </div>
@@ -51,39 +83,4 @@
 </div>
 
 
-<p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
 
-<p>
-  <b>Price:</b>
-  <%= number_to_currency(@product.price) %>
-</p>
-
-<% if @reviews.count > 0 %>
-  <table>
-    <tr>
-      <th>Review</th>
-      <th>Rating</th>
-      <th></th>
-    </tr>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= review.body %></td>
-        <td><%= number_with_precision(review.rating, :precision => 1, :significant => false) %></td>
-        <td><%= link_to 'Edit', edit_review_path(review) %></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <p>No reviews yet!</p>
-<% end %>
-
-<p>
-<a href="/reviews/new?product_id=<%= @product.id %>">Write a Review for <%= @product.name %></a>
-</p>
-
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
