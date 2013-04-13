@@ -39,13 +39,13 @@
       <div class="span6 product-container-card">
 
         <% if @reviews.count > 0 %>
-          <span class="label"><%= @reviews.count > 0 ? pluralize(@reviews.count, "review") : "" %></span>
-          <p class="rainbow-short" style="margin-top: 10px;">
+          <p class="rainbow-short">
             <% @product.average_rating.to_i.times do %>
               ★
             <% end %>
-            <span class="label">average <%= number_with_precision(@product.average_rating, :precision => 1) %></span>
           </p>
+          <span class="label"><%= @reviews.count > 0 ? pluralize(@reviews.count, "review") : "" %></span>
+          <span class="label">average <%= number_with_precision(@product.average_rating, :precision => 1) %></span>
           <% @reviews.each do |review| %>
             <p class="review">
               <p class="rainbow-short">
@@ -65,7 +65,7 @@
 
         <% end %>
 
-        <p>
+        <p class="review" style="padding-top: 10px;">
           <%= link_to "Write a Review for #{@product.name}", new_review_path(:product_id => @product.id) %>
         </p>
 
